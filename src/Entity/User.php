@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $tasks;
 
     /**
-     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="idUser")
+     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="user")
      */
     private $actions;
 
@@ -225,7 +225,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->actions->contains($action)) {
             $this->actions[] = $action;
-            $action->setIdUser($this);
+            $action->setUser($this);
         }
 
         return $this;
@@ -235,8 +235,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getIdUser() === $this) {
-                $action->setIdUser(null);
+            if ($action->getUser() === $this) {
+                $action->setUser(null);
             }
         }
 

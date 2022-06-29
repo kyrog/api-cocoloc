@@ -41,7 +41,7 @@ class Actions
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="actions")
      */
-    private $idUser;
+    private $user;
 
     public function getId(): ?int
     {
@@ -96,14 +96,14 @@ class Actions
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setUser(?User $user): self
     {
-        $this->idUser = $idUser;
+        $this->user = $user;
 
         return $this;
     }
