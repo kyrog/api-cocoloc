@@ -38,6 +38,11 @@ class Actions
      */
     private $idCategories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="actions")
+     */
+    private $idUser;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Actions
     public function setIdCategories(?Categories $idCategories): self
     {
         $this->idCategories = $idCategories;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): self
+    {
+        $this->idUser = $idUser;
 
         return $this;
     }

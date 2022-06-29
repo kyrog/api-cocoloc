@@ -59,9 +59,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tasks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="idUser")
+     */
+    private $actions;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+        $this->actions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,6 +207,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($task->getIdUser() === $this) {
                 $task->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Actions>
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    public function addAction(Actions $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAction(Actions $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getIdUser() === $this) {
+                $action->setIdUser(null);
             }
         }
 
