@@ -6,12 +6,22 @@ use App\Repository\TasksRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * @ORM\Entity(repositoryClass=TasksRepository::class)
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"idUser": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={ 
+ *  "idUser": "exact", 
+ *  "title":"partial",
+ * })
+ * @ApiFilter(DateFilter::class, properties={ 
+ *  "start_date":"DateFilter::EXCLUDE_NULL",
+ *  "start_date":"exact"
+ * })
+ * @ApiFilter(BooleanFilter::class, properties={"is_finished"})
  */
 class Tasks
 {
@@ -45,17 +55,12 @@ class Tasks
     /**
      * @ORM\Column(type="datetime")
      */
-    private $end_start;
+    private $end_date;
 
     /**
      * @ORM\Column(type="time")
      */
     private $time;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
@@ -120,18 +125,6 @@ class Tasks
         return $this;
     }
 
-    public function getEndStart(): ?\DateTimeInterface
-    {
-        return $this->end_start;
-    }
-
-    public function setEndStart(\DateTimeInterface $end_start): self
-    {
-        $this->end_start = $end_start;
-
-        return $this;
-    }
-
     public function getTime(): ?\DateTimeInterface
     {
         return $this->time;
@@ -140,18 +133,6 @@ class Tasks
     public function setTime(\DateTimeInterface $time): self
     {
         $this->time = $time;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -179,4 +160,17 @@ class Tasks
 
         return $this;
     }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->end_date;
+    }
+
+    public function setEndDate(\DateTimeInterface $end_date): self
+    {
+        $this->end_date = $end_date;
+
+        return $this;
+    }
+
 }
