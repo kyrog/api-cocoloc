@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use App\Repository\TasksRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=TasksRepository::class)
+ * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"idUser": "exact"})
  */
 class Tasks
 {
