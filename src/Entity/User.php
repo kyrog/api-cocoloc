@@ -13,8 +13,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={ "post" = {"path" = "/register"}},
- *     itemOperations={"get"},
+ *     collectionOperations={ "post" = {"path" = "/register"}, "get"={"method"="GET", "security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}},
  *     normalizationContext={"groups"={"get"}},
  *     denormalizationContext={"groups"={"post"}}
  * )
@@ -51,13 +51,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      * @Groups({"get","post"})
      */
     private $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get","post"})
      */
     private $profile_picture;
