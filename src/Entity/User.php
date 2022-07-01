@@ -6,14 +6,17 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={ "post" = {"path" = "/register"}},
- *     itemOperations={"get"}
+ *     collectionOperations={ "post" = {"path" = "/register"}, "get"={"method"="GET", "security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}},
+ *     normalizationContext={"groups"={"get"}},
+ *     denormalizationContext={"groups"={"post"}}
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
@@ -30,36 +33,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"get","post"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups("post")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups("post")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Groups({"get","post"})
      */
     private $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get","post"})
      */
     private $profile_picture;
 
     /**
+     * @Groups("get")
      * @ORM\OneToMany(targetEntity=Tasks::class, mappedBy="idUser")
      */
     private $tasks;
 
     /**
+     * @Groups("get")
      * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="user")
      */
     private $actions;
