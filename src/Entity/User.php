@@ -13,8 +13,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={ "post" = {"path" = "/register"}, "get"={"method"="GET", "security"="is_granted('ROLE_USER')"}},
- *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}},
+ *     collectionOperations={ "post" = {"path" = "/register"}, "get"={"security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"} ,"put"={"security"="is_granted('ROLE_USER')"},"delete"={"security"="is_granted('ROLE_USER')"} },
  *     normalizationContext={"groups"={"get"}},
  *     denormalizationContext={"groups"={"post"}}
  * )
