@@ -4,9 +4,24 @@ namespace App\Entity;
 
 use App\Repository\ActionsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ActionsRepository::class)
+ * @ApiResource(
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}},
+ *     collectionOperations={"get"={"security"="is_granted('ROLE_USER')"}, "post"={"security"="is_granted('ROLE_USER')"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={ 
+ *  "user": "exact",
+ *  "title": "partial",
+ *  "amount": "exact",
+ *  "idCategories": "exact"
+ * })
+ * @ApiFilter(BooleanFilter::class, properties={"is_incoming"})
  */
 class Actions
 {
