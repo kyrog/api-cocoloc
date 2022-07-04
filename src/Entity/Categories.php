@@ -6,8 +6,21 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
+ * @ApiResource(
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}},
+ *     collectionOperations={"get"={"security"="is_granted('ROLE_USER')"}, "post"={"security"="is_granted('ROLE_USER')"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={
+ *  "title": "partial",
+ *  "actions_id":"exact",
+ * })
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  */
 class Categories
@@ -25,17 +38,17 @@ class Categories
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $budget;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $color;
 
@@ -44,9 +57,21 @@ class Categories
      */
     private $actions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="categories")
+     */
+    private $user_id;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="categories")
+     */
+    private $actions_id;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->user_id = new ArrayCollection();
+        $this->actions_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +151,66 @@ class Categories
             // set the owning side to null (unless already changed)
             if ($action->getIdCategories() === $this) {
                 $action->setIdCategories(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, user>
+     */
+    public function getUserId(): Collection
+    {
+        return $this->user_id;
+    }
+
+    public function addUserId(user $userId): self
+    {
+        if (!$this->user_id->contains($userId)) {
+            $this->user_id[] = $userId;
+            $userId->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserId(user $userId): self
+    {
+        if ($this->user_id->removeElement($userId)) {
+            // set the owning side to null (unless already changed)
+            if ($userId->getCategories() === $this) {
+                $userId->setCategories(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Actions>
+     */
+    public function getActionsId(): Collection
+    {
+        return $this->actions_id;
+    }
+
+    public function addActionsId(Actions $actionsId): self
+    {
+        if (!$this->actions_id->contains($actionsId)) {
+            $this->actions_id[] = $actionsId;
+            $actionsId->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActionsId(Actions $actionsId): self
+    {
+        if ($this->actions_id->removeElement($actionsId)) {
+            // set the owning side to null (unless already changed)
+            if ($actionsId->getCategories() === $this) {
+                $actionsId->setCategories(null);
             }
         }
 
