@@ -38,11 +38,6 @@ class Categories
     private $title;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $budget;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
@@ -72,6 +67,16 @@ class Categories
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $actualBudget;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $currentBudget;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
@@ -92,18 +97,6 @@ class Categories
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getBudget(): ?int
-    {
-        return $this->budget;
-    }
-
-    public function setBudget(int $budget): self
-    {
-        $this->budget = $budget;
 
         return $this;
     }
@@ -230,6 +223,30 @@ class Categories
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getActualBudget(): ?float
+    {
+        return $this->actualBudget;
+    }
+
+    public function setActualBudget(?float $actualBudget): self
+    {
+        $this->actualBudget = $actualBudget;
+
+        return $this;
+    }
+
+    public function getCurrentBudget(): ?float
+    {
+        return $this->currentBudget;
+    }
+
+    public function setCurrentBudget(?float $currentBudget): self
+    {
+        $this->currentBudget = $currentBudget;
 
         return $this;
     }
