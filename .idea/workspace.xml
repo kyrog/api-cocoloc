@@ -3,9 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a92d943a-33a9-4fe9-8c43-b7b79224e31e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Actions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Actions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220629144734.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220630172012.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220630173655.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220630195406.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220704221504.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220704222412.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220705142014.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Categories.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +146,7 @@
       <workItem from="1656506760436" duration="793000" />
       <workItem from="1656580040334" duration="25351000" />
       <workItem from="1656971713670" duration="2139000" />
+      <workItem from="1657406428661" duration="1366000" />
     </task>
     <servers />
   </component>

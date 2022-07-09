@@ -72,6 +72,11 @@ class Categories
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="id_category")
+     */
+    private $roommate;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
@@ -230,6 +235,18 @@ class Categories
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getRoommate(): ?Roommate
+    {
+        return $this->roommate;
+    }
+
+    public function setRoommate(?Roommate $roommate): self
+    {
+        $this->roommate = $roommate;
 
         return $this;
     }
