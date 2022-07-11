@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM;
+
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\RecipeCategorieRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RecipeCategorieRepository::class)
- * @Orm\table(name="RecipeCategorie")
  * @ApiResource()
+ * @ORM\Entity(repositoryClass=RecipeCategorieRepository::class)
  */
 class RecipeCategorie
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -19,7 +19,7 @@ class RecipeCategorie
      */
     private $id;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=50)
      */
     private $title;
@@ -28,6 +28,7 @@ class RecipeCategorie
     {
         return $this->id;
     }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -38,4 +39,5 @@ class RecipeCategorie
         $this->title = $title;
 
         return $this;
-}}
+    }
+}

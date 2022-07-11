@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM;
+
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\RecipeRepository;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @ORM\Entity(repositoryClass=RecipeRepository::class)
- * @Orm\table(name="Recipe")
  * @ApiResource()
+ * @ORM\Entity(repositoryClass=RecipeRepository::class)
  */
 class Recipe
 {
@@ -19,31 +21,26 @@ class Recipe
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
      */
     private $idRecipe_category;
 
-     /**
-      *@ORM\OneToOne(targetEntity=User::class)
+    /**
+     *@ORM\OneToOne(targetEntity=User::class)
      */
     private $idUser;
-      /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     */
-    private $idIngredient;
-     /**
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     private $title;
-     /**
-     * @ORM\Column(type="string", length=2000)
+
+    /**
+     * @ORM\Column(type="string", length=200)
      */
     private $description;
-     /**
-     * @ORM\Column(type="string")
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $featured_image;
 
@@ -51,25 +48,26 @@ class Recipe
     {
         return $this->id;
     }
+
     public function getIdRecipeCategory(): ?int
     {
         return $this->idRecipe_category;
     }
-    public function getIdUser(): ?User
+
+    public function setIdRecipeCategory(int $idRecipe_category): self
+    {
+        $this->idRecipe_category = $idRecipe_category;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?int
     {
         return $this->idUser;
     }
 
-    public function setIdUser(?User $idUser): self
-    {
-        $this->idUser = $idUser;
+   
 
-        return $this;
-    }
-    public function getIdIngredient(): ?int
-    {
-        return $this->idIngredient;
-    }
     public function getTitle(): ?string
     {
         return $this->title;
@@ -93,14 +91,16 @@ class Recipe
 
         return $this;
     }
+
     public function getFeaturedImage(): ?string
     {
         return $this->featured_image;
     }
 
-    public function setDFeaturedImage(string $featured_image): self
+    public function setFeaturedImage(string $featured_image): self
     {
-        $this->featured_image= $featured_image;
+        $this->featured_image = $featured_image;
 
         return $this;
-    }}
+    }
+}

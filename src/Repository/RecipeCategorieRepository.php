@@ -40,7 +40,7 @@ class RecipeCategorieRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return RecipeCategorie[] Returns an array of Recip objects
+//     * @return RecipeCategorie[] Returns an array of RecipeCategorie objects
 //     */
 //    public function findByExampleField($value): array
 //    {
