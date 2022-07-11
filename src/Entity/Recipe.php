@@ -4,11 +4,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 /**
- * @ORM\Entity(repositoryClass=RecipRepository::class)
- * @Orm\table(name="Recip")
+ * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ * @Orm\table(name="Recipe")
  * @ApiResource()
  */
-class Recip
+class Recipe
 {
     /**
      * @ORM\Id
@@ -22,7 +22,7 @@ class Recip
      * @ORM\Id
      * @ORM\GeneratedValue
      */
-    private $idRecip_category;
+    private $idRecipe_category;
 
      /**
       *@ORM\OneToOne(targetEntity=User::class)
@@ -51,9 +51,9 @@ class Recip
     {
         return $this->id;
     }
-    public function getIdRecipCategory(): ?int
+    public function getIdRecipeCategory(): ?int
     {
-        return $this->idRecip_category;
+        return $this->idRecipe_category;
     }
     public function getIdUser(): ?User
     {

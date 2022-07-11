@@ -40,7 +40,7 @@ class ActionsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Ingredient[] Returns an array of Actions objects
+//     * @return Ingredient[] Returns an array of Ingredient objects
 //     */
 //    public function findByExampleField($value): array
 //    {

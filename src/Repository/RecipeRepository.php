@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Recip;
+use App\Entity\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Recip>
+ * @extends ServiceEntityRepository<Recipe>
  *
- * @method Recip|null find($id, $lockMode = null, $lockVersion = null)
- * @method Recip|null findOneBy(array $criteria, array $orderBy = null)
- * @method Recip[]    findAll()
- * @method Recip[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Recipe|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Recipe|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Recipe[]    findAll()
+ * @method Recipe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class RecipRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Recip::class);
+        parent::__construct($registry, Recipe::class);
     }
 
-    public function add(Recip $entity, bool $flush = false): void
+    public function add(Recipe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class RecipRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Recip $entity, bool $flush = false): void
+    public function remove(Recipe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class RecipRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Recip[] Returns an array of Recip objects
+//     * @return Recipe[] Returns an array of Recipe objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class RecipRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Recip
+//    public function findOneBySomeField($value): ?Recipe
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

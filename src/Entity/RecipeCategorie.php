@@ -5,11 +5,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
- * @ORM\Entity(repositoryClass=RecipCategoryRepository::class)
- * @Orm\table(name="RecipCategory")
+ * @ORM\Entity(repositoryClass=RecipeCategorieRepository::class)
+ * @Orm\table(name="RecipeCategorie")
  * @ApiResource()
  */
-class RecipCategory
+class RecipeCategorie
 {
 
     /**
