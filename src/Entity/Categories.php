@@ -77,6 +77,11 @@ class Categories
      */
     private $currentBudget;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="categories")
+     */
+    private $roommate;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
@@ -247,6 +252,18 @@ class Categories
     public function setCurrentBudget(?float $currentBudget): self
     {
         $this->currentBudget = $currentBudget;
+
+        return $this;
+    }
+
+    public function getRoommate(): ?Roommate
+    {
+        return $this->roommate;
+    }
+
+    public function setRoommate(?Roommate $roommate): self
+    {
+        $this->roommate = $roommate;
 
         return $this;
     }
