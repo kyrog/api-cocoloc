@@ -23,7 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  * })
  * @ApiFilter(BooleanFilter::class, properties={"is_incoming"})
  */
-class Actions
+class Actions extends EntityBase
 {
     /**
      * @ORM\Id
