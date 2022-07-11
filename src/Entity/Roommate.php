@@ -40,12 +40,15 @@ class Roommate
     /**
      * @ORM\OneToMany(targetEntity=Categories::class, mappedBy="roommate")
      */
-    private $id_category;
+    private $categories;
 
     public function __construct()
     {
-        $this->id_category = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
+
+
+
 
     public function getId(): ?int
     {
@@ -67,30 +70,32 @@ class Roommate
     /**
      * @return Collection<int, Categories>
      */
-    public function getIdCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->id_category;
+        return $this->categories;
     }
 
-    public function addIdCategory(Categories $idCategory): self
+    public function addCategory(Categories $category): self
     {
-        if (!$this->id_category->contains($idCategory)) {
-            $this->id_category[] = $idCategory;
-            $idCategory->setRoommate($this);
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setRoommate($this);
         }
 
         return $this;
     }
 
-    public function removeIdCategory(Categories $idCategory): self
+    public function removeCategory(Categories $category): self
     {
-        if ($this->id_category->removeElement($idCategory)) {
+        if ($this->categories->removeElement($category)) {
             // set the owning side to null (unless already changed)
-            if ($idCategory->getRoommate() === $this) {
-                $idCategory->setRoommate(null);
+            if ($category->getRoommate() === $this) {
+                $category->setRoommate(null);
             }
         }
 
         return $this;
     }
+
+   
 }
