@@ -80,6 +80,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $categories;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="user")
+     */
+    private $roommate;
+    /**
      * @ORM\OneToMany(targetEntity=PollAnswer::class, mappedBy="user")
      */
     private $pollAnswers;
@@ -277,6 +281,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getRoommate(): ?Roommate
+    {
+        return $this->roommate;
+    }
+
+    public function setRoommate(?Roommate $roommate): self
+    {
+        $this->roommate = $roommate;
+
+        return $this;
+    }
     /**
      * @return Collection<int, PollAnswer>
      */
