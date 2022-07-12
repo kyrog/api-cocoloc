@@ -51,17 +51,13 @@ class Actions extends EntityBase
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="actions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCategories;
+    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="actions")
      */
     private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="actions_id")
-     */
-    private $categories;
 
     public function getId(): ?int
     {
@@ -100,18 +96,6 @@ class Actions extends EntityBase
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getIdCategories(): ?Categories
-    {
-        return $this->idCategories;
-    }
-
-    public function setIdCategories(?Categories $idCategories): self
-    {
-        $this->idCategories = $idCategories;
 
         return $this;
     }
