@@ -79,6 +79,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="user")
+     */
+    private $roommate;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -266,6 +271,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCategories(?Categories $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    public function getRoommate(): ?Roommate
+    {
+        return $this->roommate;
+    }
+
+    public function setRoommate(?Roommate $roommate): self
+    {
+        $this->roommate = $roommate;
 
         return $this;
     }
