@@ -12,7 +12,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 /**
  * @ORM\Entity(repositoryClass=ActionsRepository::class)
  * @ApiResource(
- *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}, "patch"={"security"="is_granted('ROLE_USER')"}},
  *     collectionOperations={"get"={"security"="is_granted('ROLE_USER')"}, "post"={"security"="is_granted('ROLE_USER')"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={ 
@@ -23,7 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  * })
  * @ApiFilter(BooleanFilter::class, properties={"is_incoming"})
  */
-class Actions
+class Actions extends EntityBase
 {
     /**
      * @ORM\Id
@@ -51,17 +51,13 @@ class Actions
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="actions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCategories;
+    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="actions")
      */
     private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="actions_id")
-     */
-    private $categories;
 
     public function getId(): ?int
     {
@@ -100,18 +96,6 @@ class Actions
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getIdCategories(): ?Categories
-    {
-        return $this->idCategories;
-    }
-
-    public function setIdCategories(?Categories $idCategories): self
-    {
-        $this->idCategories = $idCategories;
 
         return $this;
     }

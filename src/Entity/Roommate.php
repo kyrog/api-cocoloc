@@ -14,7 +14,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * @ApiResource(
- *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}, "patch"={"security"="is_granted('ROLE_USER')"}},
  *     collectionOperations={"get"={"security"="is_granted('ROLE_USER')"}, "post"={"security"="is_granted('ROLE_USER')"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={
@@ -42,9 +42,15 @@ class Roommate
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="roommate")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
 
@@ -91,6 +97,36 @@ class Roommate
             // set the owning side to null (unless already changed)
             if ($category->getRoommate() === $this) {
                 $category->setRoommate(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRoommate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getRoommate() === $this) {
+                $user->setRoommate(null);
             }
         }
 

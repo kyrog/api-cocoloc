@@ -14,12 +14,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * @ApiResource(
- *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}},
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"}, "put"={"security"="is_granted('ROLE_USER')"}, "delete"={"security"="is_granted('ROLE_USER')"}, "patch"={"security"="is_granted('ROLE_USER')"}},
  *     collectionOperations={"get"={"security"="is_granted('ROLE_USER')"}, "post"={"security"="is_granted('ROLE_USER')"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={
  *  "title": "partial",
- *  "actions_id":"exact",
+ *  "actions":"exact",
  * })
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  */
@@ -48,7 +48,7 @@ class Categories
     private $color;
 
     /**
-     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="idCategories")
+     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="categories")
      */
     private $actions;
 
@@ -56,11 +56,6 @@ class Categories
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="categories")
      */
     private $user_id;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="categories")
-     */
-    private $actions_id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -86,7 +81,6 @@ class Categories
     {
         $this->actions = new ArrayCollection();
         $this->user_id = new ArrayCollection();
-        $this->actions_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,7 +136,7 @@ class Categories
     {
         if (!$this->actions->contains($action)) {
             $this->actions[] = $action;
-            $action->setIdCategories($this);
+            $action->setCategories($this);
         }
 
         return $this;
@@ -152,8 +146,8 @@ class Categories
     {
         if ($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getIdCategories() === $this) {
-                $action->setIdCategories(null);
+            if ($action->getCategories() === $this) {
+                $action->setCategories(null);
             }
         }
 
@@ -184,36 +178,6 @@ class Categories
             // set the owning side to null (unless already changed)
             if ($userId->getCategories() === $this) {
                 $userId->setCategories(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Actions>
-     */
-    public function getActionsId(): Collection
-    {
-        return $this->actions_id;
-    }
-
-    public function addActionsId(Actions $actionsId): self
-    {
-        if (!$this->actions_id->contains($actionsId)) {
-            $this->actions_id[] = $actionsId;
-            $actionsId->setCategories($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActionsId(Actions $actionsId): self
-    {
-        if ($this->actions_id->removeElement($actionsId)) {
-            // set the owning side to null (unless already changed)
-            if ($actionsId->getCategories() === $this) {
-                $actionsId->setCategories(null);
             }
         }
 

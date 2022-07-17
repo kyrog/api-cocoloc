@@ -14,7 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ApiResource(
  *     collectionOperations={ "post" = {"path" = "/register"}, "get"={"security"="is_granted('ROLE_USER')"}},
- *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"} ,"put"={"security"="is_granted('ROLE_USER')"},"delete"={"security"="is_granted('ROLE_USER')"} },
+ *     itemOperations={"get"={"security"="is_granted('ROLE_USER')"} ,"put"={"security"="is_granted('ROLE_USER')"},"delete"={"security"="is_granted('ROLE_USER')"}, "patch"={"security"="is_granted('ROLE_USER')"} },
  *     normalizationContext={"groups"={"get"}},
  *     denormalizationContext={"groups"={"post"}}
  * )
@@ -79,10 +79,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="user")
+     */
+    private $roommate;
+    /**
+     * @ORM\OneToMany(targetEntity=PollAnswer::class, mappedBy="user")
+     */
+    private $pollAnswers;
+
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->actions = new ArrayCollection();
+        $this->pollAnswers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -269,4 +280,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getRoommate(): ?Roommate
+    {
+        return $this->roommate;
+    }
+
+    public function setRoommate(?Roommate $roommate): self
+    {
+        $this->roommate = $roommate;
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, PollAnswer>
+     */
+    public function getPollAnswers(): Collection
+    {
+        return $this->pollAnswers;
+    }
+
+    public function addPollAnswer(PollAnswer $pollAnswer): self
+    {
+        if (!$this->pollAnswers->contains($pollAnswer)) {
+            $this->pollAnswers[] = $pollAnswer;
+            $pollAnswer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePollAnswer(PollAnswer $pollAnswer): self
+    {
+        if ($this->pollAnswers->removeElement($pollAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($pollAnswer->getUser() === $this) {
+                $pollAnswer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
