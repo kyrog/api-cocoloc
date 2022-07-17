@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $email;
 
@@ -52,13 +52,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $phone_number;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $profile_picture;
 
@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $pollAnswers;
 
     /**
-     * @Groups("get")
+     * @Groups({"get","post", "put", "patch", "delete"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $username;
