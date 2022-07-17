@@ -20,6 +20,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  * @ApiFilter(SearchFilter::class, properties={
  *  "title": "partial",
  *  "id_category":"exact",
+ *
  * })
  * @ORM\Entity(repositoryClass=RoommateRepository::class)
  */

@@ -75,18 +75,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $actions;
 
     /**
+     * @Groups("get")
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="user_id")
      */
     private $categories;
 
     /**
+     * @Groups("get")
      * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="user")
      */
     private $roommate;
     /**
+     * @Groups("get")
      * @ORM\OneToMany(targetEntity=PollAnswer::class, mappedBy="user")
      */
     private $pollAnswers;
+
+    /**
+     * @Groups("get")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
 
 
     public function __construct()
@@ -318,6 +327,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pollAnswer->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
