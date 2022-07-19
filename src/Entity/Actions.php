@@ -19,7 +19,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  *  "user": "exact",
  *  "title": "partial",
  *  "amount": "exact",
- *  "idCategories": "exact"
+ *  "categories": "exact"
  * })
  * @ApiFilter(BooleanFilter::class, properties={"is_incoming"})
  */
