@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $email;
 
@@ -52,13 +52,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $phone_number;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get","post"})
+     * @Groups({"get","post", "put", "patch", "delete"})
      */
     private $profile_picture;
 
@@ -75,18 +75,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $actions;
 
     /**
+     * @Groups("get")
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="user_id")
      */
     private $categories;
 
     /**
+     * @Groups("get")
      * @ORM\ManyToOne(targetEntity=Roommate::class, inversedBy="user")
      */
     private $roommate;
     /**
+     * @Groups("get")
      * @ORM\OneToMany(targetEntity=PollAnswer::class, mappedBy="user")
      */
     private $pollAnswers;
+
+    /**
+     * @Groups({"get","post", "put", "patch", "delete"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
 
 
     public function __construct()
@@ -318,6 +327,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pollAnswer->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
