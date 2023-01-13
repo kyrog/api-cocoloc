@@ -1,8 +1,6 @@
 # api-cocoloc
-ma lubule
 
-
-renter dans l'image :
+entrer dans le container :
 
 - docker exec -it mydockersymfony5_php_1 sh
 
